@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poly Personas</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Momo+Signature&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+        scrollbar-width: none;
+      }
+
+      body::-webkit-scrollbar {
+        display: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      header,
+      main {
+        padding: 2rem;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      header h1 {
+        margin: 0;
+        font-weight: 500;
+        font-family: "Momo Signature", cursive;
+        letter-spacing: 0.08em;
+      }
+
+      .highlight-persona {
+        color: #00ff85;
+      }
+
+      .page-title {
+        animation: title-glide 0.7s ease-out both;
+      }
+
+      @keyframes title-glide {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px) scale(0.95);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(4px) scale(1.02);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      header p {
+        margin: 0;
+      }
+
+      .create-user-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1rem;
+        border-radius: 0.9rem;
+        background: rgba(255, 255, 255, 0.08);
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .create-user-link:hover {
+        background: rgba(255, 255, 255, 0.16);
+        transform: translateY(-2px);
+      }
+
+      .create-user-link img {
+        width: 1.1rem;
+        height: 1.1rem;
+        display: block;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      li {
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease, background 0.2s ease;
+        aspect-ratio: 1;
+        overflow: hidden;
+        display: flex;
+        position: relative;
+      }
+
+      li:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      li a {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        padding: 1.75rem 1.5rem;
+        text-align: center;
+      }
+
+      .user-avatar {
+        width: 70%;
+        aspect-ratio: 1;
+        border-radius: 1rem;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .user-avatar span {
+        font-size: 4vw;
+        font-weight: 600;
+        color: rgba(10, 10, 10, 0.9);
+      }
+
+      .user-name {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 500;
+      }
+
+      .user-delete-form {
+        position: absolute;
+        top: 0.6rem;
+        right: 0.6rem;
+        margin: 0;
+      }
+
+      .user-delete-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: rgba(10, 10, 10, 0.4);
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        padding: 0.4rem;
+      }
+
+      .user-delete-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .user-delete-button img {
+        width: 1.1rem;
+        height: 1.1rem;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="page-title">Poly <span class="highlight-persona">Persona</span></h1>
+      <p>
+        <a href="/users/new" class="create-user-link">
+          <img src="/static/icons/plus.svg" alt="" />
+          Create New User
+        </a>
+      </p>
+    </header>
+    <main>
+      {% if users %}
+      <ul>
+        {% for user in users %}
+        <li>
+          <form
+            class="user-delete-form"
+            action="/users/{{ user.id }}/delete"
+            method="post"
+            onsubmit="return confirm('Deleting this user removes all personas and chats. Continue?');"
+          >
+            <button type="submit" class="user-delete-button" aria-label="Delete {{ user.name }}">
+              <img src="/static/icons/delete.svg" alt="" />
+            </button>
+          </form>
+          <a href="/users/{{ user.id }}">
+            <div class="user-avatar">
+              {% if user.avatar_path %}
+              <img src="{{ user.avatar_path }}" alt="{{ user.name }} avatar" />
+              {% else %}
+              <span>{{ user.name[:1]|upper }}</span>
+              {% endif %}
+            </div>
+            <p class="user-name">{{ user.name }}</p>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No users yet.</p>
+      {% endif %}
+    </main>
+  </body>
+</html>
+

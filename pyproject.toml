@@ -1,0 +1,16 @@
+[project]
+name = "poly-persona"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.121.1",
+    "google-generativeai>=0.8.5",
+    "jinja2>=3.1.6",
+    "langchain>=1.0.5",
+    "python-dotenv>=1.2.1",
+    "python-multipart>=0.0.20",
+    "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
+]

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ user.name }}'s Space</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        display: flex;
+        flex-direction: column;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      body::-webkit-scrollbar {
+        display: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      section {
+        padding: 1.5rem 2rem;
+      }
+
+      header {
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.2rem;
+        text-align: center;
+        padding: 1.5rem 2rem;
+      }
+
+      header p {
+        margin: 0;
+      }
+
+      header h1 {
+        margin: 0;
+        font-weight: 500;
+      }
+
+      section {
+        background: rgba(255, 255, 255, 0.05);
+        margin: 1rem 2rem;
+        border-radius: 1rem;
+      }
+
+      .layout {
+        flex: 1;
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.5rem 2rem;
+      }
+
+      .persona-nav {
+        flex: 0 0 20%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .persona-nav section {
+        flex: 1;
+        margin: 0;
+        padding: 1.5rem;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .persona-nav section::-webkit-scrollbar {
+        display: none;
+      }
+
+      .persona-nav li {
+        border-radius: 0.75rem;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .persona-nav li a {
+        display: block;
+        padding: 0.75rem 1rem;
+        flex: 1;
+      }
+
+      .persona-nav li:hover {
+        transform: translateX(4px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .persona-nav li.active {
+        border: 1px solid #00ff85;
+        background: rgba(0, 255, 133, 0.12);
+      }
+
+      .persona-nav li form {
+        margin: 0;
+      }
+
+      .delete-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        padding: 0.35rem;
+      }
+
+      .delete-button:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .delete-button img {
+        width: 1rem;
+        height: 1rem;
+        display: block;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      main section {
+        margin: 0;
+      }
+
+      .chat-log {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .chat-message {
+        max-width: 70%;
+        padding: 1rem 1.25rem;
+        border-radius: 1rem;
+        line-height: 1.5;
+        font-size: 0.95rem;
+        word-break: break-word;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .chat-message.bot {
+        background: rgba(0, 200, 255, 0.18);
+        align-self: flex-start;
+        border-top-left-radius: 0.3rem;
+      }
+
+      .chat-message.user {
+        background: rgba(0, 255, 133, 0.2);
+        align-self: flex-end;
+        border-top-right-radius: 0.3rem;
+      }
+
+      h2,
+      h3 {
+        margin-top: 0;
+        font-weight: 500;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 1rem;
+      }
+
+      textarea,
+      input,
+      button {
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+      }
+
+      textarea,
+      input[type="text"] {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+        color: inherit;
+      }
+
+      .chat-input textarea {
+        width: 92%;
+        margin: 1.5rem auto 0;
+        display: block;
+        resize: none;
+        height: 2.5rem;
+        padding: 0.6rem 1rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      button {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.75rem;
+        background: rgba(255, 255, 255, 0.15);
+        color: inherit;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      form > div {
+        margin-bottom: 1rem;
+      }
+
+      strong {
+        font-weight: 500;
+      }
+
+      img {
+        border-radius: 1rem;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{{ user.name }}'s Space</h1>
+      <p><a href="/">Back to Dashboard</a></p>
+    </header>
+    <div class="layout">
+      <aside class="persona-nav">
+        <section>
+          <h2>Persona Threads</h2>
+          {% if threads %}
+          <ul>
+            {% for thread in threads %}
+            <li class="{% if active_thread and thread.id == active_thread.id %}active{% endif %}">
+              <a href="/users/{{ user.id }}?thread_id={{ thread.id }}">
+                {{ thread.persona_name }}
+              </a>
+              {% if thread.persona_name != general_persona_name %}
+              <form
+                action="/users/{{ user.id }}/threads/{{ thread.id }}/delete"
+                method="post"
+                onsubmit="return confirm('Deleting this persona will remove all its chats. Continue?');"
+              >
+                <button type="submit" class="delete-button" aria-label="Delete {{ thread.persona_name }}">
+                  <img src="/static/icons/delete.svg" alt="" />
+                </button>
+              </form>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No personas yet. Ask to create one in the chat below.</p>
+          {% endif %}
+        </section>
+      </aside>
+      <main>
+        <section>
+          {% if active_thread %}
+          <article>
+            <h3>{{ active_thread.persona_name }}</h3>
+          </article>
+          {% endif %}
+          {% if messages %}
+          <div class="chat-log">
+            {% for entry in messages %}
+            <div class="chat-message {{ entry.role }}">
+              {{ entry.content }}
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p>No messages yet.</p>
+          {% endif %}
+          <form
+            class="chat-input"
+            action="/users/{{ user.id }}/chat"
+            method="post"
+            onkeydown="if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); this.submit(); }"
+          >
+            {% if active_thread %}
+            <input type="hidden" name="thread_id" value="{{ active_thread.id }}" />
+            {% endif %}
+            <textarea id="message" name="message" rows="2" placeholder="Type your message..." required></textarea>
+          </form>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+
