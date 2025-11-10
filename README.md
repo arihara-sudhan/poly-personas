@@ -29,7 +29,7 @@ These screenshots walk through a full session, start to finish.
 9. The Friend replies as expected, showing cross-thread continuity.
 ![Screenshot 2025-11-10 195028](sshots/Screenshot%202025-11-10%20195028.png)
 
-We bring the last message to the previous message in the current persona intentionally since it's good for some cases (e.g., “back to my mentor thread, should I focus on organic growth?”).
+We bring the last message to the previous persona in the current persona intentionally since it's good for some cases (e.g., “back to my mentor thread, should I focus on organic growth?”).
 
 ## Setup Guide
 1. **Clone the repository**
