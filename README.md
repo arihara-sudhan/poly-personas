@@ -38,7 +38,7 @@ We bring the last message to the previous persona in the current persona intenti
    cd poly-personas
    ```
 
-2. **Create and activate a virtual environment** (optional but recommended)
+2. **Create and activate a virtual environment**
    ```bash
    python -m venv .venv
    .venv\Scripts\activate  # Windows
