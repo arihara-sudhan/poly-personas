@@ -38,17 +38,17 @@ We bring the last message to the previous persona in the current persona intenti
    cd poly-personas
    ```
 
-2. **Create and activate a virtual environment**
+2. **Create Virtual Environment and Install dependencies**
    ```bash
-   python -m venv .venv
+   uv sync
+   ```
+
+3. **Activate the created virtual environment**
+   ```bash
    .venv\Scripts\activate  # Windows
    # source .venv/bin/activate  # macOS/Linux
    ```
 
-3. **Install dependencies**
-   ```bash
-   uv sync
-   ```
 
 4. **Configure environment variables**
    - Create a `.env` file.
