@@ -38,7 +38,7 @@ We bring the last message to the previous persona in the current persona intenti
    cd poly-personas
    ```
 
-2. **Create Virtual Environment and Install dependencies**
+2. **Create Virtual Environment and Install dependencies (uv sync is enough)**
    ```bash
    uv sync
    ```
@@ -61,3 +61,14 @@ We bring the last message to the previous persona in the current persona intenti
 
 6. **Open the app**
    - Visit `http://127.0.0.1:8000` in your browser.
+
+7. **Initially, we won't have users**
+![Screenshot 2025-11-10 203633.png](sshots/Screenshot 2025-11-10 203633.png)
+
+8. **Create One**
+![Screenshot 2025-11-10 203712.png](sshots/Screenshot 2025-11-10 203712.png)
+
+9. **Click on The User**
+![Screenshot 2025-11-10 203727.png](sshots/Screenshot 2025-11-10 203727.png)
+
+10. **Happy, Persona-Changing Interaction!**
