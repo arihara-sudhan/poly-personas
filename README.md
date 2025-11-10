@@ -2,7 +2,7 @@
 
 These screenshots walk through a full session, start to finish.
 
-1. Landing on the dashboard with all users. I select Ariel.
+1. Landing on the dashboard with all users. I select Ariel. (Create users initally)
 ![Screenshot 2025-11-10 194349](sshots/Screenshot%202025-11-10%20194349.png)
 
 2. Ariel’s space opens with the default General Chat. I ask for a friend persona.
