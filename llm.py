@@ -3,19 +3,14 @@ import os
 import re
 from dataclasses import dataclass
 from typing import List, Sequence
-
 import google.generativeai as genai
-
 
 @dataclass
 class PersonaDetails:
     persona_name: str
     persona_prompt: str
 
-
 class LLMBotService:
-    """Wrapper around Gemini for persona workflows."""
-
     chat_model_name = "gemini-2.5-flash"
     embed_model_name = "models/text-embedding-004"
 
@@ -137,4 +132,3 @@ class LLMBotService:
         model = self._get_chat_model()
         response = model.generate_content(prompt)
         return (response.text or "").strip()
-

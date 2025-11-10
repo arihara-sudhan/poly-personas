@@ -1,15 +1,9 @@
 from __future__ import annotations
-
 from typing import Any, Dict
-
 from langchain_core.runnables import RunnableBranch, RunnableLambda, RunnablePassthrough
-
 from llm import LLMBotService, PersonaDetails
 
-
 class PersonaAgent:
-    """LangChain-powered state machine for persona switching."""
-
     def __init__(self, bot_service: LLMBotService) -> None:
         self.bot_service = bot_service
         self._graph = (
@@ -36,13 +30,11 @@ class PersonaAgent:
         state["action"] = "create_persona"
         state["persona_details"] = details
         state["persona_prompt"] = details.persona_prompt
-        # Starting fresh conversation for a brand-new persona.
         state["context_snippets"] = []
         return state
 
     def _prepare_existing_persona(self, state: Dict[str, Any]) -> Dict[str, Any]:
         state["action"] = "chat"
-        # Ensure persona prompt is available for downstream generation.
         prompt = state.get("active_persona_prompt") or state.get("persona_prompt")
         state["persona_prompt"] = prompt
         return state
@@ -53,4 +45,3 @@ class PersonaAgent:
         reply = self.bot_service.generate_reply(persona_prompt, context, state["message"])
         state["reply"] = reply
         return state
-
