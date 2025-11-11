@@ -63,12 +63,20 @@ We bring the last message to the previous persona in the current persona intenti
    - Visit `http://127.0.0.1:8000` in your browser.
 
 7. **Initially, we won't have users**
-![Screenshot 2025-11-10 203633.png](sshots/Screenshot 2025-11-10 203633.png)
+![Screenshot 2025-11-10 203633](sshots/Screenshot%202025-11-10%20203633.png)
 
 8. **Create One**
-![Screenshot 2025-11-10 203712.png](sshots/Screenshot 2025-11-10 203712.png)
+![Screenshot 2025-11-10 203712](sshots/Screenshot%202025-11-10%20203712.png)
 
 9. **Click on The User**
-![Screenshot 2025-11-10 203727.png](sshots/Screenshot 2025-11-10 203727.png)
+![Screenshot 2025-11-10 203727](sshots/Screenshot%202025-11-10%20203727.png)
 
 10. **Happy, Persona-Changing Interaction!**
+
+## Key Libraries
+
+Poly Persona relies on FastAPI for the web server and routing, SQLAlchemy for database models and persistence, Jinja2 to render HTML templates, LangChain to orchestrate persona-aware logic, Google’s Generative AI SDK to talk to the Gemini model, python-dotenv for managing environment variables, python-multipart for handling file uploads (avatar images), and Uvicorn as the ASGI server during development.
+
+## How It Works
+
+When a user opens a persona space, FastAPI serves Jinja2-rendered pages backed by SQLAlchemy models that store users, persona threads, and messages. Incoming chat messages go through a LangChain-powered agent that detects whether to reuse or create a persona, fetches relevant history, and asks Gemini (via the Google Generative AI SDK) to craft the reply. The response is stored, the UI updates, and switching personas simply means selecting a different thread whose context is kept separate unless the user explicitly ties them together.
