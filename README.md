@@ -77,6 +77,48 @@ We bring the last message to the previous persona in the current persona intenti
 
 Poly Persona relies on FastAPI for the web server and routing, SQLAlchemy for database models and persistence, Jinja2 to render HTML templates, LangChain to orchestrate persona-aware logic, Google’s Generative AI SDK to talk to the Gemini model, python-dotenv for managing environment variables, python-multipart for handling file uploads (avatar images), and Uvicorn as the ASGI server during development.
 
+## API Endpoints
+
+- `GET /` – Poly Persona dashboard
+- `GET /users/new` – Create User form
+- `GET /users/{user_id}` – Persona space for a user (`thread_id` query param optional)
+- `POST /users` – Create a user (`name`, optional `avatar`)
+- `POST /users/{user_id}/chat` – Send a message (`message`, optional `thread_id`)
+- `POST /users/{user_id}/threads/{thread_id}/delete` – Delete a persona thread (not the general one)
+- `POST /users/{user_id}/delete` – Delete a user and all personas
+
+## Example cURL Commands
+
+Create a user (avatar optional):
+```bash
+curl -X POST http://127.0.0.1:8000/users \
+  -F "name=Ariel" \
+  -F "avatar=@C:/path/to/avatar.png"
+```
+
+Send a message to the general persona:
+```bash
+curl -X POST http://127.0.0.1:8000/users/1/chat \
+  -F "message=Would you act like my mentor?"
+```
+
+Send a message to a specific persona thread:
+```bash
+curl -X POST http://127.0.0.1:8000/users/1/chat \
+  -F "thread_id=42" \
+  -F "message=Switch back to the mentor persona!"
+```
+
+Delete a persona thread:
+```bash
+curl -X POST http://127.0.0.1:8000/users/1/threads/42/delete
+```
+
+Delete a user:
+```bash
+curl -X POST http://127.0.0.1:8000/users/1/delete
+```
+
 ## How It Works
 
 When a user opens a persona space, FastAPI serves Jinja2-rendered pages backed by SQLAlchemy models that store users, persona threads, and messages. Incoming chat messages go through a LangChain-powered agent that detects whether to reuse or create a persona, fetches relevant history, and asks Gemini (via the Google Generative AI SDK) to craft the reply. The response is stored, the UI updates, and switching personas simply means selecting a different thread whose context is kept separate unless the user explicitly ties them together.
