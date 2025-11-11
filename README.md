@@ -80,3 +80,6 @@ Poly Persona relies on FastAPI for the web server and routing, SQLAlchemy for da
 ## How It Works
 
 When a user opens a persona space, FastAPI serves Jinja2-rendered pages backed by SQLAlchemy models that store users, persona threads, and messages. Incoming chat messages go through a LangChain-powered agent that detects whether to reuse or create a persona, fetches relevant history, and asks Gemini (via the Google Generative AI SDK) to craft the reply. The response is stored, the UI updates, and switching personas simply means selecting a different thread whose context is kept separate unless the user explicitly ties them together.
+
+Each persona keeps its own history by saving every exchange in SQLite and, on new messages, retrieving the most relevant snippets from that thread so Gemini can respond in-context without leaking across personas.
+![contextual](sschots/contextual.png)

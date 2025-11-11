@@ -41,24 +41,11 @@ class LLMBotService:
         return response["embedding"]
 
     def detect_intent(self, message: str) -> str:
-        lowered = message.lower()
-        heuristic_triggers = [
-            "act like",
-            "be a",
-            "be an",
-            "pretend to be",
-            "roleplay as",
-            "become a",
-            "you are now",
-            "take the role of",
-        ]
-        if any(trigger in lowered for trigger in heuristic_triggers):
-            return "create_persona"
-
         prompt = (
             "You classify if a user wants to create a new persona.\n"
             "Reply with exactly one word: CREATE or CHAT.\n"
-            "CREATE when the user requests a new persona, new role, or new character; CHAT otherwise.\n"
+            "CREATE when the user requests a new persona, a new role, or a new character—even if phrased indirectly, like asking to talk to a specific type of person.\n"
+            "CHAT when they continue with the current persona or ask general questions.\n"
             f"User message: {message}"
         )
         model = self._get_chat_model()
